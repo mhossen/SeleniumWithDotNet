@@ -23,7 +23,7 @@ namespace TestOrangeHRM.Helpers
         }
 
 
-        public bool IsElementPresent(IWebElement element)
+        private bool IsElementPresent(IWebElement element)
         {
             try
             {

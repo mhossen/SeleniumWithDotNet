@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="CustomExceptions\NoKeyboardKeyExist.cs" />
     <Compile Include="Extensions\WebDriverExtension.cs" />
-    <Compile Include="Helpers\ButtonHelper.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\GenericHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
