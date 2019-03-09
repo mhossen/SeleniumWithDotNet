@@ -50,6 +50,7 @@
     <Compile Include="CustomExceptions\NoKeyboardKeyExist.cs" />
     <Compile Include="EnumTypes\BrowserTypes.cs" />
     <Compile Include="EnumTypes\KeyboardKeys.cs" />
+    <Compile Include="EnumTypes\MenuTypes.cs" />
     <Compile Include="Interface\IConfig.cs" />
     <Compile Include="Model\AppKeySettings.cs" />
     <Compile Include="Model\ResourceCollection.cs" />

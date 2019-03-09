@@ -12,18 +12,24 @@ namespace TestOrangeHRM.Pages
         {
             _driver = driver;
         }
-        GenericHelper Generic => new GenericHelper(_driver);
 
-        IWebElement _txtUsername => _driver.ById("txtUsername");
-        IWebElement _txtPassword => _driver.ById("txtPassword");
-        IWebElement _btnLogin => _driver.ById("btnLogin");
+        private GenericHelper _generic
+        {
+            get
+            {
+                return new GenericHelper(_driver);
+            }
+        }
+        private IWebElement _txtUsername => _driver.ById("txtUsername");
+        private IWebElement _txtPassword => _driver.ById("txtPassword");
+        private IWebElement _btnLogin => _driver.ById("btnLogin");
 
 
         public void LogIn(string username, string password)
         {
-            Generic.GetElement(_txtUsername).SendKeys(username);
-            Generic.GetElement(_txtPassword).SendKeys(password);
-            Generic.GetElement(_btnLogin).Click();
+            _generic.GetElement(_txtUsername).SendKeys(username);
+            _generic.GetElement(_txtPassword).SendKeys(password);
+            _generic.GetElement(_btnLogin).Click();
         }
     }
 }

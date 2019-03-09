@@ -3,8 +3,14 @@ using System.Threading.Tasks;
 
 namespace TestOrangeHRM.Helpers
 {
-    public class JsonHelper
+    internal class JsonHelper
     {
+
+        private FileHelper GetFile(string path)
+        {
+            return new FileHelper(path);
+        }
+
         public async Task<TObject> JsonValueAsync<TObject>(string filePath) where TObject : new()
         {
             FileHelper file = new FileHelper(filePath);

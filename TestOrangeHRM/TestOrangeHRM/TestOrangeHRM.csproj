@@ -62,7 +62,9 @@
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\GenericHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\MouseActionHelper.cs" />
     <Compile Include="Pages\HrmLoginPage.cs" />
+    <Compile Include="Pages\HrmPageMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BasicTests.cs" />
   </ItemGroup>

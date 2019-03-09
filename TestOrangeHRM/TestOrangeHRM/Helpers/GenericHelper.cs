@@ -16,6 +16,13 @@ namespace TestOrangeHRM.Helpers
             _driver = driver;
         }
 
+        private Actions _action
+        {
+            get
+            {
+                return new Actions(_driver);
+            }
+        }
 
         private bool IsElementPresent(IWebElement element)
         {
@@ -49,25 +56,25 @@ namespace TestOrangeHRM.Helpers
                 switch (keys)
                 {
                     case KeyboardKeys.Tab:
-                        new Actions(_driver).SendKeys(Keys.Tab).Perform();
+                        _action.SendKeys(Keys.Tab).Perform();
                         break;
                     case KeyboardKeys.Enter:
-                        new Actions(_driver).SendKeys(Keys.Enter).Perform();
+                        _action.SendKeys(Keys.Enter).Perform();
                         break;
                     case KeyboardKeys.Home:
-                        new Actions(_driver).SendKeys(Keys.Home).Perform();
+                        _action.SendKeys(Keys.Home).Perform();
                         break;
                     case KeyboardKeys.End:
-                        new Actions(_driver).SendKeys(Keys.End).Perform();
+                        _action.SendKeys(Keys.End).Perform();
                         break;
                     case KeyboardKeys.Shift:
-                        new Actions(_driver).SendKeys(Keys.Shift).Perform();
+                        _action.SendKeys(Keys.Shift).Perform();
                         break;
                     case KeyboardKeys.PageDown:
-                        new Actions(_driver).SendKeys(Keys.PageDown).Perform();
+                        _action.SendKeys(Keys.PageDown).Perform();
                         break;
                     case KeyboardKeys.PageUp:
-                        new Actions(_driver).SendKeys(Keys.PageUp).Perform();
+                        _action.SendKeys(Keys.PageUp).Perform();
                         break;
                     default:
                         throw new NoKeyboardKeyExist("Keyborad key is not defined!");

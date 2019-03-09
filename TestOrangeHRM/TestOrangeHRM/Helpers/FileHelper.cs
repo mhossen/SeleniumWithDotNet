@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TestOrangeHRM.Helpers
 {
-    public class FileHelper
+    internal class FileHelper
     {
         private readonly string _path;
 
