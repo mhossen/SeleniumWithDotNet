@@ -35,6 +35,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,8 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\AppConfigReader.cs" />
+    <Compile Include="CustomExceptions\NoBrowserExist.cs" />
+    <Compile Include="CustomExceptions\NoKeyboardKeyExist.cs" />
     <Compile Include="EnumTypes\BrowserTypes.cs" />
     <Compile Include="EnumTypes\KeyboardKeys.cs" />
+    <Compile Include="Interface\IConfig.cs" />
+    <Compile Include="Model\AppKeySettings.cs" />
     <Compile Include="Model\ResourceCollection.cs" />
     <Compile Include="Model\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

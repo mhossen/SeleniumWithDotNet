@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestOrangeHRM.CustomExceptions
+namespace DataLib.CustomExceptions
 {
     public class NoKeyboardKeyExist : Exception
     {
