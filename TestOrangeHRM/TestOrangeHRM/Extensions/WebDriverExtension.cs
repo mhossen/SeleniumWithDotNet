@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace TestOrangeHRM.Extensions
@@ -31,5 +32,10 @@ namespace TestOrangeHRM.Extensions
         public static IList<IWebElement> ElementsByPartialLinkText(this IWebDriver driver, string partialLinkText) =>
             driver.FindElements(By.PartialLinkText(partialLinkText));
 
+        public static void MaximizeBrowser(this IWebDriver driver) => driver.Manage().Window.Maximize();
+
+        public static void PageTimeout(this IWebDriver driver, int seconds) => driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(seconds);
+
+        public static void ImplicitTimeout(this IWebDriver driver, int seconds) => driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
     }
 }
