@@ -1,4 +1,4 @@
-﻿using DataLib.Model;
+﻿using DataLib.EnumTypes;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using System;

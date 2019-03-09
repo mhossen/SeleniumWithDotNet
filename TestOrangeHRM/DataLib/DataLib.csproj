@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\KeyboardKeys.cs" />
+    <Compile Include="EnumTypes\BrowserTypes.cs" />
+    <Compile Include="EnumTypes\KeyboardKeys.cs" />
     <Compile Include="Model\ResourceCollection.cs" />
     <Compile Include="Model\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿namespace DataLib.Model
+﻿namespace DataLib.EnumTypes
 {
     public enum KeyboardKeys
     {
