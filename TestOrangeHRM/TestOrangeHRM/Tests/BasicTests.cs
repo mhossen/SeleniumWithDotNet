@@ -19,19 +19,47 @@ namespace TestOrangeHRM.Tests
                 return new JsonHelper();
             }
         }
+        HrmLoginPage _loginPage
+        {
+            get
+            {
+                return new HrmLoginPage(Driver);
+            }
+        }
+        HrmPageMenu _menu
+        {
+            get
+            {
+                return new HrmPageMenu(Driver);
+            }
+        }
+        HrmSystemUsersPage _usersPage
+        {
+            get
+            {
+                return new HrmSystemUsersPage(Driver);
+            }
+        }
+
+
         [Test]
         public void BasicNavTest()
         {
             var settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
             Driver.Navigate().GoToUrl(settings.Url);
 
-            HrmLoginPage loginPage = new HrmLoginPage(Driver);
-            loginPage.LogIn(settings.Username, settings.Password);
+            _loginPage.LogIn(settings.Username, settings.Password);
             Thread.Sleep(2000); // not good coding standard but placing for basic test
             Console.WriteLine(Driver.Title);
 
-            HrmPageMenu menu = new HrmPageMenu(Driver);
-            menu.GoToMainMenuPage(MenuTypes.PIM);
+            _menu.GoToMainMenuPage(MenuTypes.Admin);
+            var userData = _usersPage.GetUserTabelData();
+            foreach (var user in userData)
+            {
+                Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
+            }
+
         }
+
     }
 }
