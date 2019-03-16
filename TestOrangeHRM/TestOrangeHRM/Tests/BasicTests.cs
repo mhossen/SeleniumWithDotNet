@@ -10,7 +10,7 @@ using TestOrangeHRM.Pages;
 namespace TestOrangeHRM.Tests
 {
     [TestFixture]
-    public class BasicTests : WebDriverBase
+    public class BasicTests : TestBase
     {
         JsonHelper Json
         {
@@ -42,7 +42,7 @@ namespace TestOrangeHRM.Tests
         }
 
 
-        [Test]
+        [Test, Order(1)]
         public void BasicNavTest()
         {
             var settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
@@ -56,10 +56,18 @@ namespace TestOrangeHRM.Tests
             var userData = _usersPage.GetUserTabelData();
             foreach (var user in userData)
             {
-                Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
+
+                if (!user.EmployeeName.Equals("Hannah Flores"))
+                {
+
+                    user.CheckBox.Click();
+                    Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
+                }
+
             }
 
         }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 
@@ -37,5 +38,15 @@ namespace TestOrangeHRM.Extensions
         public static void PageTimeout(this IWebDriver driver, int seconds) => driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(seconds);
 
         public static void ImplicitTimeout(this IWebDriver driver, int seconds) => driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+
+        public static IWebElement WaitForElement(this IWebDriver driver, IWebElement element, int timeOutInsec)
+        {
+            if (timeOutInsec > 0)
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeOutInsec));
+                return wait.Until(e => element);
+            }
+            return element;
+        }
     }
 }

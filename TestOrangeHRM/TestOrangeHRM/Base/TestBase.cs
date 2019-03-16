@@ -7,16 +7,17 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System;
 using TestOrangeHRM.Extensions;
+using TestOrangeHRM.Pages;
 
 namespace TestOrangeHRM.Base
 {
     [SetUpFixture]
-    public class WebDriverBase
+    public class TestBase
     {
         public IWebDriver Driver { get; set; }
 
         readonly IConfig Config = new AppConfigReader();
-
+        HrmLoginPage LoginPage => new HrmLoginPage(Driver);
 
         [OneTimeSetUp]
         public void InitOneTimeSetup()
@@ -56,6 +57,7 @@ namespace TestOrangeHRM.Base
         [OneTimeTearDown]
         public void TearDown()
         {
+            LoginPage.Logout();
             if (Driver != null)
             {
                 Driver.Close();

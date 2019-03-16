@@ -57,7 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\WebDriverBase.cs" />
+    <Compile Include="Base\TestBase.cs" />
     <Compile Include="DataTables\SystemUserTable.cs" />
     <Compile Include="Extensions\WebDriverExtension.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
