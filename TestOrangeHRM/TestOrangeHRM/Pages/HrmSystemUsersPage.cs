@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System.Collections.Generic;
+using TestOrangeHRM.DataTables;
 using TestOrangeHRM.Extensions;
 
 namespace TestOrangeHRM.Pages
@@ -41,12 +42,5 @@ namespace TestOrangeHRM.Pages
         }
     }
 
-    internal class SystemUserTable
-    {
-        public IWebElement CheckBox { get; set; }
-        public IWebElement Username { get; set; }
-        public IWebElement UserRole { get; set; }
-        public IWebElement EmployeeName { get; set; }
-        public IWebElement Status { get; set; }
-    }
+    
 }

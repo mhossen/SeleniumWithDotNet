@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\WebDriverBase.cs" />
+    <Compile Include="DataTables\SystemUserTable.cs" />
     <Compile Include="Extensions\WebDriverExtension.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\GenericHelper.cs" />
