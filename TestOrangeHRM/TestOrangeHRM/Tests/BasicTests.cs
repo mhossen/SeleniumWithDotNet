@@ -1,9 +1,11 @@
-﻿using DataLib.EnumTypes;
+﻿using System;
+using System.Threading;
+using DataLib.EnumTypes;
 using DataLib.Model;
 using NUnit.Framework;
-using System;
-using System.Threading;
+using OpenQA.Selenium;
 using TestOrangeHRM.Base;
+using TestOrangeHRM.DataTables;
 using TestOrangeHRM.Helpers;
 using TestOrangeHRM.Pages;
 
@@ -12,40 +14,18 @@ namespace TestOrangeHRM.Tests
     [TestFixture]
     public class BasicTests : TestBase
     {
-        JsonHelper Json
-        {
-            get
-            {
-                return new JsonHelper();
-            }
-        }
-        HrmLoginPage _loginPage
-        {
-            get
-            {
-                return new HrmLoginPage(Driver);
-            }
-        }
-        HrmPageMenu _menu
-        {
-            get
-            {
-                return new HrmPageMenu(Driver);
-            }
-        }
-        HrmSystemUsersPage _usersPage
-        {
-            get
-            {
-                return new HrmSystemUsersPage(Driver);
-            }
-        }
+        private JsonHelper Json => new JsonHelper();
 
+        private HrmLoginPage _loginPage => new HrmLoginPage(Driver);
+
+        private HrmPageMenu _menu => new HrmPageMenu(Driver);
+
+        private HrmSystemUsersPage _usersPage => new HrmSystemUsersPage(Driver);
 
         [Test, Order(1)]
         public void BasicNavTest()
         {
-            var settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
+            UserSettings settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
             Driver.Navigate().GoToUrl(settings.Url);
 
             _loginPage.LogIn(settings.Username, settings.Password);
@@ -53,21 +33,21 @@ namespace TestOrangeHRM.Tests
             Console.WriteLine(Driver.Title);
 
             _menu.GoToMainMenuPage(MenuTypes.Admin);
-            var userData = _usersPage.GetUserTabelData();
-            foreach (var user in userData)
-            {
 
+            foreach (SystemUserTable user in _usersPage.GetUserTabelData())
+            {
                 if (!user.EmployeeName.Equals("Hannah Flores"))
                 {
-
                     user.CheckBox.Click();
                     Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
                 }
-
             }
-
         }
 
-
+        public void Blah()
+        {
+            var instance = Instantiator.Create<IWebDriver, HrmPageMenu>(Driver);
+        }
     }
 }
+
