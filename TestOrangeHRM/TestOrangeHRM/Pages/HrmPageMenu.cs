@@ -12,7 +12,6 @@ namespace TestOrangeHRM.Pages
   {
     public HrmPageMenu(IWebDriver driver) : base(driver)
     {
-      _driver = driver;
     }
 
     private MouseActionHelper MouseAction
