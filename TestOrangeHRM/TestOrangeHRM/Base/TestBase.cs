@@ -5,8 +5,10 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Remote;
 using System;
 using TestOrangeHRM.Extensions;
+using TestOrangeHRM.Helpers;
 using TestOrangeHRM.Pages;
 
 namespace TestOrangeHRM.Base
@@ -14,31 +16,30 @@ namespace TestOrangeHRM.Base
     [SetUpFixture]
     public class TestBase
     {
-        public IWebDriver Driver { get; set; }
-
+        public RemoteWebDriver RemoteDriver { get; set; }
         readonly IConfig Config = new AppConfigReader();
-        HrmLoginPage LoginPage => new HrmLoginPage(Driver);
+        // HrmLoginPage LoginPage => new HrmLoginPage(RemoteDriver);
 
         [OneTimeSetUp]
         public void InitOneTimeSetup()
         {
-            if (Driver == null)
+            if (RemoteDriver == null)
             {
                 switch (Config.GetBrowser())
                 {
                     case BrowserTypes.Chrome:
-                        Driver = new ChromeDriver();
+                        RemoteDriver = new ChromeDriver();
                         break;
                     case BrowserTypes.Firefox:
-                        Driver = new FirefoxDriver();
+                        RemoteDriver = new FirefoxDriver();
                         break;
                     default:
-                        throw new WebDriverException($"Driver for browser type: {Config.GetBrowser()} created");
+                        throw new WebDriverException($"Driver for browser type: {Config.GetBrowser()} not created");
                 }
 
-                Driver.MaximizeBrowser();
-                Driver.PageTimeout(Config.GetPageTimeOut());
-                Driver.ImplicitTimeout(Config.GetElementTimeOut());
+                RemoteDriver.MaximizeBrowser();
+                RemoteDriver.PageTimeout(Config.GetPageTimeOut());
+                //  RemoteDriver.ImplicitTimeout(Config.GetElementTimeOut());
             }
         }
 
@@ -57,11 +58,12 @@ namespace TestOrangeHRM.Base
         [OneTimeTearDown]
         public void TearDown()
         {
-            LoginPage.Logout();
-            if (Driver != null)
+            //LoginPage.Logout();
+            PageFactory.GetPage<HrmLoginPage>(RemoteDriver).Logout();
+            if (RemoteDriver != null)
             {
-                Driver.Close();
-                Driver.Quit();
+                RemoteDriver.Close();
+                RemoteDriver.Quit();
             }
         }
     }

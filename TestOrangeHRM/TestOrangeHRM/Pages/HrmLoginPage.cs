@@ -1,63 +1,70 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
+using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using TestOrangeHRM.Base;
 using TestOrangeHRM.Extensions;
 using TestOrangeHRM.Helpers;
 
 namespace TestOrangeHRM.Pages
 {
-    public class HrmLoginPage
+    internal class HrmLoginPage : BasePage
     {
-        private IWebDriver _driver;
-
-        public HrmLoginPage(IWebDriver driver)
+        public HrmLoginPage(RemoteWebDriver remotebDriver) : base(remotebDriver)
         {
-            _driver = driver;
         }
 
         private GenericHelper _generic
         {
             get
             {
-                return new GenericHelper(_driver);
+                return new GenericHelper(_remoteDriver);
             }
         }
         private MouseActionHelper _mouse
         {
             get
             {
-                return new MouseActionHelper(_driver);
+                return new MouseActionHelper(_remoteDriver);
             }
         }
 
-        private IWebElement _txtUsername => _driver.ById("txtUsername");
-        private IWebElement _txtPassword => _driver.ById("txtPassword");
-        private IWebElement _btnLogin => _driver.ById("btnLogin");
-        private IWebElement _lnkWelcome => _driver.ById("welcome");
-        private IList<IWebElement> _lnkWelcomeMenu => _driver.ElementsByXPath("//*[@id='welcome-menu']/ul/li/a");
-        public IWebElement _welcomeMenuAtt => _driver.ById("welcome-menu");
+        private IWebElement _txtUsername => _remoteDriver.ById("txtUsername");
+        private IWebElement _txtPassword => _remoteDriver.ById("txtPassword");
+        private IWebElement _btnLogin => _remoteDriver.ById("btnLogin");
+        private IWebElement _lnkWelcome => _remoteDriver.ById("welcome");
+        private IList<IWebElement> _lnkWelcomeMenu => _remoteDriver.ElementsByXPath("//*[@id='welcome-menu']/ul/li/a");
+        public IWebElement _welcomeMenuAtt => _remoteDriver.ById("welcome-menu");
 
-        public void LogIn(string username, string password)
+        public HrmPageMenu LogIn(string username, string password)
         {
             _generic.GetElement(_txtUsername).SendKeys(username);
             _generic.GetElement(_txtPassword).SendKeys(password);
             _generic.GetElement(_btnLogin).Click();
+            return PageFactory.GetPage<HrmPageMenu>(_remoteDriver);
         }
 
-        public void Logout()
+        public HrmLoginPage Logout()
         {
             _generic.GetElement(_lnkWelcome).Click();
             ClickWelcomeMenuLink("Logout");
+            return PageFactory.GetPage<HrmLoginPage>(_remoteDriver);
         }
 
         private void ClickWelcomeMenuLink(string text)
         {
-            if (!_generic.GetElement(_welcomeMenuAtt).GetAttribute("style").Equals("display: block;"))
-                _driver.WaitForElement(_welcomeMenuAtt, 1);
-            _mouse.MouseHoverClick(_lnkWelcomeMenu.Where(t => t.Text.Equals(text)).FirstOrDefault());
+            int attemptCounter = 0;
+            const int maxAttempts = 5;
+
+            while (!_generic.GetElement(_welcomeMenuAtt).GetAttribute("style").Equals("display: block;") && attemptCounter < maxAttempts)
+            {
+                _remoteDriver.WaitForElement(_welcomeMenuAtt, 1);
+                attemptCounter++;
+            }
+
+            var element = _lnkWelcomeMenu.Where(t => t.Text.Equals(text)).FirstOrDefault();
+            if (element != null)
+                _mouse.MouseHoverClick(element);
         }
 
     }

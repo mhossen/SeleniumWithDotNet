@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using DataLib.EnumTypes;
 using DataLib.Model;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using TestOrangeHRM.Base;
 using TestOrangeHRM.DataTables;
 using TestOrangeHRM.Helpers;
@@ -16,25 +16,28 @@ namespace TestOrangeHRM.Tests
     {
         private JsonHelper Json => new JsonHelper();
 
-        private HrmLoginPage _loginPage => new HrmLoginPage(Driver);
+        //  private HrmLoginPage _loginPage => new HrmLoginPage(RemoteDriver);
 
-        private HrmPageMenu _menu => new HrmPageMenu(Driver);
+        //  private HrmPageMenu _menu => new HrmPageMenu(RemoteDriver);
 
-        private HrmSystemUsersPage _usersPage => new HrmSystemUsersPage(Driver);
+        //  private HrmSystemUsersPage _usersPage => new HrmSystemUsersPage(RemoteDriver);
 
         [Test, Order(1)]
         public void BasicNavTest()
         {
             UserSettings settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
-            Driver.Navigate().GoToUrl(settings.Url);
+            RemoteDriver.Navigate().GoToUrl(settings.Url);
 
-            _loginPage.LogIn(settings.Username, settings.Password);
+            PageFactory.GetPage<HrmLoginPage>(RemoteDriver).LogIn(settings.Username, settings.Password);
             Thread.Sleep(2000); // not good coding standard but placing for basic test
-            Console.WriteLine(Driver.Title);
+            Console.WriteLine(RemoteDriver.Title);
 
-            _menu.GoToMainMenuPage(MenuTypes.Admin);
+            PageFactory.GetPage<HrmPageMenu>(RemoteDriver).GoToMainMenuPage(MenuTypes.Admin);
+            IList<SystemUserTable> users = PageFactory.GetPage<HrmSystemUsersPage>(RemoteDriver)
+                .GetUserTabelData();
 
-            foreach (SystemUserTable user in _usersPage.GetUserTabelData())
+            // note as of 3/31/2019 user table has been changed but this code is good
+            foreach (SystemUserTable user in users)
             {
                 if (!user.EmployeeName.Equals("Hannah Flores"))
                 {
@@ -46,7 +49,7 @@ namespace TestOrangeHRM.Tests
 
         public void Blah()
         {
-            var instance = Instantiator.Create<IWebDriver, HrmPageMenu>(Driver);
+            //var instance = Instantiator.Create<IWebDriver, HrmPageMenu>(Driver);
         }
     }
 }

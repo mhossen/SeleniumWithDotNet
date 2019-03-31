@@ -1,27 +1,25 @@
 ﻿using DataLib.EnumTypes;
 using OpenQA.Selenium;
-using System;
+using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using System.Linq;
+using TestOrangeHRM.Base;
 using TestOrangeHRM.Extensions;
 using TestOrangeHRM.Helpers;
 
 namespace TestOrangeHRM.Pages
 {
-    public class HrmPageMenu
+    internal class HrmPageMenu : BasePage
     {
-        private IWebDriver _driver;
-
-        public HrmPageMenu(IWebDriver driver)
+         public HrmPageMenu(RemoteWebDriver remotebDriver) : base(remotebDriver)
         {
-            _driver = driver;
         }
 
         private MouseActionHelper MouseAction
         {
             get
             {
-                return new MouseActionHelper(_driver);
+                return new MouseActionHelper(_remoteDriver);
             }
         }
 
@@ -29,11 +27,11 @@ namespace TestOrangeHRM.Pages
         {
             get
             {
-                return new GenericHelper(_driver);
+                return new GenericHelper(_remoteDriver);
             }
         }
 
-        private IList<IWebElement> _mainMenus => _driver.ElementsByXPath("//div[@class='menu']/ul/li");
+        private IList<IWebElement> _mainMenus => _remoteDriver.ElementsByXPath("//div[@class='menu']/ul/li");
 
         public void GoToMainMenuPage(MenuTypes menu)
         {

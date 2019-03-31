@@ -1,22 +1,21 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
+using TestOrangeHRM.Base;
 
 namespace TestOrangeHRM.Helpers
 {
-    internal class MouseActionHelper
+    internal class MouseActionHelper : BasePage
     {
-        private readonly IWebDriver _driver;
-
-        public MouseActionHelper(IWebDriver driver)
+        public MouseActionHelper(RemoteWebDriver remotebDriver) : base(remotebDriver)
         {
-            _driver = driver;
         }
 
         private GenericHelper Generic
         {
             get
             {
-                return new GenericHelper(_driver);
+                return new GenericHelper(_remoteDriver);
             }
         }
 
@@ -24,7 +23,7 @@ namespace TestOrangeHRM.Helpers
         {
             get
             {
-                return new Actions(_driver);
+                return new Actions(_remoteDriver);
             }
         }
 

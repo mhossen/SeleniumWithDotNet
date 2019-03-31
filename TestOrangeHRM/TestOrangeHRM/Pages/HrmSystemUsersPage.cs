@@ -1,32 +1,28 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
+using TestOrangeHRM.Base;
 using TestOrangeHRM.DataTables;
 using TestOrangeHRM.Extensions;
+using TestOrangeHRM.Helpers;
 
 namespace TestOrangeHRM.Pages
 {
-    internal class HrmSystemUsersPage
+    internal class HrmSystemUsersPage : BasePage
     {
-        private readonly IWebDriver _driver;
-
-        public HrmSystemUsersPage(IWebDriver driver)
+        public HrmSystemUsersPage(RemoteWebDriver remotebDriver) : base(remotebDriver)
         {
-            _driver = driver;
         }
-
+        IWebElement _userTable => _remoteDriver.ByTagName("tbody");
         public IList<SystemUserTable> GetUserTabelData()
         {
             IList<SystemUserTable> tableColums = new List<SystemUserTable>();
 
-            var table = _driver.ByTagName("tbody");
-
+            var table = PageFactory.GetPage<GenericHelper>(_remoteDriver).GetElement(_userTable);
             var rows = table.FindElements(By.TagName("tr"));
 
             for (int i = 1; i < rows.Count; i++)
             {
-
-                
-
                 tableColums.Add(new SystemUserTable
                 {
                     CheckBox = rows[i].FindElement(By.XPath($"(//td[1])[{i}]")),
@@ -37,10 +33,9 @@ namespace TestOrangeHRM.Pages
                 });
             }
 
-
             return tableColums;
         }
     }
 
-    
+
 }
