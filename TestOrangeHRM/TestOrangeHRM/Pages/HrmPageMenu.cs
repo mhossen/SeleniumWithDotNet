@@ -8,37 +8,29 @@ using TestOrangeHRM.Helpers;
 
 namespace TestOrangeHRM.Pages
 {
-    public class HrmPageMenu
+  public class HrmPageMenu : BasePage
+  {
+    public HrmPageMenu(IWebDriver driver) : base(driver)
     {
-        private IWebDriver _driver;
-
-        public HrmPageMenu(IWebDriver driver)
-        {
-            _driver = driver;
-        }
-
-        private MouseActionHelper MouseAction
-        {
-            get
-            {
-                return new MouseActionHelper(_driver);
-            }
-        }
-
-        private GenericHelper _generic
-        {
-            get
-            {
-                return new GenericHelper(_driver);
-            }
-        }
-
-        private IList<IWebElement> _mainMenus => _driver.ElementsByXPath("//div[@class='menu']/ul/li");
-
-        public void GoToMainMenuPage(MenuTypes menu)
-        {
-            MouseAction.MouseHoverClick(_generic.GetElement(_mainMenus.Where(e => e.Text.Equals(menu.ToString())).FirstOrDefault()));
-        }
-
     }
+
+    private MouseActionHelper MouseAction
+    {
+      get { return new MouseActionHelper(_driver); }
+    }
+
+    private GenericHelper _generic
+    {
+      get { return new GenericHelper(_driver); }
+    }
+
+    private IList<IWebElement> _mainMenus => _driver.ElementsByXPath("//div[@class='menu']/ul/li");
+
+    public void GoToMainMenuPage(MenuTypes menu)
+    {
+      MouseAction.MouseHoverClick(
+        _generic.GetElement(_mainMenus.Where(e => e.Text.Equals(menu.ToString())).FirstOrDefault()));
+    }
+
+  }
 }

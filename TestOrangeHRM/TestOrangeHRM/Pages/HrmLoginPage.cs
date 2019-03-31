@@ -9,13 +9,10 @@ using TestOrangeHRM.Helpers;
 
 namespace TestOrangeHRM.Pages
 {
-    public class HrmLoginPage
-    {
-        private IWebDriver _driver;
-
-        public HrmLoginPage(IWebDriver driver)
+  public class HrmLoginPage : BasePage
+  {
+        public HrmLoginPage(IWebDriver driver) : base(driver)
         {
-            _driver = driver;
         }
 
         private GenericHelper _generic
@@ -55,9 +52,18 @@ namespace TestOrangeHRM.Pages
 
         private void ClickWelcomeMenuLink(string text)
         {
-            if (!_generic.GetElement(_welcomeMenuAtt).GetAttribute("style").Equals("display: block;"))
-                _driver.WaitForElement(_welcomeMenuAtt, 1);
-            _mouse.MouseHoverClick(_lnkWelcomeMenu.Where(t => t.Text.Equals(text)).FirstOrDefault());
+            //if 
+          int attemptCounter = 0;
+          const int maxAttempts = 5;
+          while (!_generic.GetElement(_welcomeMenuAtt).GetAttribute("style").Equals("display: block;") && attemptCounter < maxAttempts)
+          {
+            _driver.WaitForElement(_welcomeMenuAtt, 1);
+            attemptCounter++;
+          }
+
+          var element = _lnkWelcomeMenu.Where(t => t.Text.Equals(text)).FirstOrDefault();
+          if (element != null)
+            _mouse.MouseHoverClick(element);
         }
 
     }

@@ -5,13 +5,10 @@ using TestOrangeHRM.Extensions;
 
 namespace TestOrangeHRM.Pages
 {
-    internal class HrmSystemUsersPage
-    {
-        private readonly IWebDriver _driver;
-
-        public HrmSystemUsersPage(IWebDriver driver)
+    internal class HrmSystemUsersPage : BasePage
+  {
+        public HrmSystemUsersPage(IWebDriver driver) : base(driver)
         {
-            _driver = driver;
         }
 
         public IList<SystemUserTable> GetUserTabelData()
