@@ -2,25 +2,25 @@
 using DataLib.EnumTypes;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Threading;
+using TestOrangeHRM.Base;
+using TestOrangeHRM.Extensions;
 
 namespace TestOrangeHRM.Helpers
 {
-    internal class GenericHelper
+    internal class GenericHelper : BasePage
     {
-        private readonly IWebDriver _driver;
-
-        public GenericHelper(IWebDriver driver)
+        public GenericHelper(RemoteWebDriver remotebDriver) : base(remotebDriver)
         {
-            _driver = driver;
         }
 
         private Actions _action
         {
             get
             {
-                return new Actions(_driver);
+                return new Actions(_remoteDriver);
             }
         }
 
@@ -41,11 +41,29 @@ namespace TestOrangeHRM.Helpers
 
         public IWebElement GetElement(IWebElement element)
         {
-            if (IsElementPresent(element))
-
-                return element;
-            else
-                throw new NoSuchElementException("Element Not Found: " + element.ToString());
+            try
+            {
+                int startCount = 0;
+                const int maxCount = 8;
+                if (IsElementPresent(element))
+                {
+                    return element;
+                }
+                else
+                {
+                    while (!(element.Displayed || element.Enabled) && startCount < maxCount)
+                    {
+                        _remoteDriver.WaitForElement(element, 1);
+                        startCount++;
+                    }
+                    return element;
+                }
+            }
+            catch (NoSuchElementException e)
+            {
+                Console.WriteLine("Element Not Found: " + e.Message);
+            }
+            return null;
         }
 
         public void KeyBoardAction(int number, KeyboardKeys keys)

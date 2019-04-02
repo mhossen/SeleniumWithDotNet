@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using DataLib.EnumTypes;
 using DataLib.Model;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using TestOrangeHRM.Base;
 using TestOrangeHRM.DataTables;
 using TestOrangeHRM.Helpers;
@@ -16,37 +16,41 @@ namespace TestOrangeHRM.Tests
   {
     private JsonHelper Json => new JsonHelper();
 
-    private HrmLoginPage _loginPage => PageFactory.GetPage<HrmLoginPage>(Driver);
+        //  private HrmLoginPage _loginPage => new HrmLoginPage(RemoteDriver);
 
-    private HrmPageMenu _menu => PageFactory.GetPage<HrmPageMenu>(Driver);
+        //  private HrmPageMenu _menu => new HrmPageMenu(RemoteDriver);
 
-    private HrmSystemUsersPage _usersPage => PageFactory.GetPage<HrmSystemUsersPage>(Driver);
+        //  private HrmSystemUsersPage _usersPage => new HrmSystemUsersPage(RemoteDriver);
 
-    [Test, Order(1)]
-    public void BasicNavTest()
-    {
-      UserSettings settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
-      Driver.Navigate().GoToUrl(settings.Url);
-
-      _loginPage.LogIn(settings.Username, settings.Password);
-      Thread.Sleep(2000); // not good coding standard but placing for basic test
-      Console.WriteLine(Driver.Title);
-
-      _menu.GoToMainMenuPage(MenuTypes.Admin);
-
-      foreach (SystemUserTable user in _usersPage.GetUserTabelData())
-      {
-        if (!user.EmployeeName.Equals("Hannah Flores"))
+        [Test, Order(1)]
+        public void BasicNavTest()
         {
-          user.CheckBox.Click();
-          Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
-        }
-      }
-    }
+            UserSettings settings = Json.JsonValue<UserSettings>(ResourceCollection.SiteConfig);
+            RemoteDriver.Navigate().GoToUrl(settings.Url);
 
-    public void Blah()
-    {
-      //var instance = Instantiator.Create<IWebDriver, HrmPageMenu>(Driver);
+            PageFactory.GetPage<HrmLoginPage>(RemoteDriver).LogIn(settings.Username, settings.Password);
+            Thread.Sleep(2000); // not good coding standard but placing for basic test
+            Console.WriteLine(RemoteDriver.Title);
+
+            PageFactory.GetPage<HrmPageMenu>(RemoteDriver).GoToMainMenuPage(MenuTypes.Admin);
+            IList<SystemUserTable> users = PageFactory.GetPage<HrmSystemUsersPage>(RemoteDriver)
+                .GetUserTabelData();
+
+            // note as of 3/31/2019 user table has been changed but this code is good
+            foreach (SystemUserTable user in users)
+            {
+                if (!user.EmployeeName.Equals("Hannah Flores"))
+                {
+                    user.CheckBox.Click();
+                    Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
+                }
+            }
+        }
+
+        public void Blah()
+        {
+            //var instance = Instantiator.Create<IWebDriver, HrmPageMenu>(Driver);
+        }
     }
-  }
 }
+
