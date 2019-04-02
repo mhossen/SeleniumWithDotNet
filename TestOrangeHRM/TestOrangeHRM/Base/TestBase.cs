@@ -13,12 +13,12 @@ using TestOrangeHRM.Pages;
 
 namespace TestOrangeHRM.Base
 {
-    [SetUpFixture]
+    [SetUpFixture, Parallelizable]
     public class TestBase
     {
         public RemoteWebDriver RemoteDriver { get; set; }
         readonly IConfig Config = new AppConfigReader();
-        // HrmLoginPage LoginPage => new HrmLoginPage(RemoteDriver);
+        public JsonHelper Json => new JsonHelper();
 
         [OneTimeSetUp]
         public void InitOneTimeSetup()
@@ -43,17 +43,17 @@ namespace TestOrangeHRM.Base
             }
         }
 
-    [SetUp]
-    public void BeforeTest()
-    {
-      Console.WriteLine("Run something before each test methods");
-    }
+        [SetUp]
+        public void BeforeTest()
+        {
+            Console.WriteLine("Run something before each test methods");
+        }
 
-    [TearDown]
-    public void AfterTest()
-    {
-      Console.WriteLine("Run something after each test methods");
-    }
+        [TearDown]
+        public void AfterTest()
+        {
+            Console.WriteLine("Run something after each test methods");
+        }
 
         [OneTimeTearDown]
         public void TearDown()

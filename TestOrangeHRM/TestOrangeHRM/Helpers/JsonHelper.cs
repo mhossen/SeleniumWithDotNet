@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace TestOrangeHRM.Helpers
 {
-    internal class JsonHelper
+    public class JsonHelper
     {
-
         private FileHelper GetFile(string path)
         {
             return new FileHelper(path);

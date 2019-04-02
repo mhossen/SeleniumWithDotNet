@@ -71,8 +71,9 @@
     <Compile Include="Pages\HrmLoginPage.cs" />
     <Compile Include="Pages\HrmPageMenu.cs" />
     <Compile Include="Pages\HrmSystemUsersPage.cs" />
-    <Compile Include="Pages\PageFactory.cs" />
+    <Compile Include="Base\PageFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\BasicParallelTest.cs" />
     <Compile Include="Tests\BasicTests.cs" />
   </ItemGroup>
   <ItemGroup>

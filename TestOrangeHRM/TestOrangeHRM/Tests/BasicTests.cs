@@ -11,17 +11,10 @@ using TestOrangeHRM.Pages;
 
 namespace TestOrangeHRM.Tests
 {
-  [TestFixture]
-  public class BasicTests : TestBase
-  {
-    private JsonHelper Json => new JsonHelper();
-
-        //  private HrmLoginPage _loginPage => new HrmLoginPage(RemoteDriver);
-
-        //  private HrmPageMenu _menu => new HrmPageMenu(RemoteDriver);
-
-        //  private HrmSystemUsersPage _usersPage => new HrmSystemUsersPage(RemoteDriver);
-
+    [TestFixture, Parallelizable]
+    public class BasicTests : TestBase
+    {
+        
         [Test, Order(1)]
         public void BasicNavTest()
         {
@@ -45,11 +38,6 @@ namespace TestOrangeHRM.Tests
                     Console.WriteLine($"All employee Name: {user.EmployeeName.Text}");
                 }
             }
-        }
-
-        public void Blah()
-        {
-            //var instance = Instantiator.Create<IWebDriver, HrmPageMenu>(Driver);
         }
     }
 }
